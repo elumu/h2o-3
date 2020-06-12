@@ -3,8 +3,10 @@ package hex.glm;
 import water.MemoryManager;
 import water.fvec.Frame;
 import water.util.ArrayUtils;
+import water.util.TwoDimTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GLMUtils {
 
@@ -31,6 +33,52 @@ public class GLMUtils {
     return gamColIndices;
   }
 
+  public static TwoDimTable combineScoringHistory(TwoDimTable glmSc1, TwoDimTable earlyStopSc2) {
+    String[] esColTypes = earlyStopSc2.getColTypes();
+    String[] esColHeaders = earlyStopSc2.getRowHeaders();
+    String[] esColFormats = earlyStopSc2.getColFormats();
+    ArrayList<String> finalRowHeaders = new ArrayList<>(Arrays.asList(glmSc1.getRowHeaders()));
+    ArrayList<String> finalColHeaders = new ArrayList<>(Arrays.asList(glmSc1.getColHeaders()));
+    ArrayList<String> finalColTypes = new ArrayList<>(Arrays.asList(glmSc1.getColTypes()));
+    ArrayList<String> finalColFormats = new ArrayList<>(Arrays.asList(glmSc1.getColFormats()));
+    ArrayList<Integer> earlyStopColIndices = new ArrayList<Integer>();
+    
+    int colCounter = 0;
+    for (String colName : earlyStopSc2.getColHeaders()) { // collect final table colHeaders, RowHeaders, ColFormats, ColTypes
+      if (!finalColHeaders.contains(colName.toLowerCase())) {
+        finalColHeaders.add(colName);
+        finalColTypes.add(esColTypes[colCounter]);
+        finalColFormats.add(esColFormats[colCounter]);
+      //  finalRowHeaders.add(esColHeaders[colCounter]);
+        earlyStopColIndices.add(colCounter);
+      }
+      colCounter++;
+    }
+    final int tableSize = finalColHeaders.size();
+    TwoDimTable res = new TwoDimTable("Scoring History", "", 
+            glmSc1.getRowHeaders(), finalColHeaders.toArray(new String[tableSize]),
+            finalColTypes.toArray(new String[tableSize]), finalColFormats.toArray(new String[tableSize]), "");
+    res = combineTableContents(glmSc1, earlyStopSc2, res, earlyStopColIndices);
+    return res;
+  }
+  
+  public static TwoDimTable combineTableContents(TwoDimTable glmSc1, TwoDimTable earlyStopSc2, TwoDimTable combined, 
+                                                 ArrayList<Integer> earlyStopColIndices) {
+    final int rowSize = glmSc1.getRowDim();
+    final int glmColSize = glmSc1.getColDim();
+    final int earlyStopColSize = earlyStopColIndices.size();
+    for (int rowIndex = 0; rowIndex < rowSize; rowIndex++) {
+      for (int colIndex = 0; colIndex < glmColSize; colIndex++) { // add contents of glm Scoring history first
+        combined.set(rowIndex, colIndex, glmSc1.get(rowIndex, colIndex));
+      }
+      for (int colIndex = 0; colIndex < earlyStopColSize; colIndex++) { // add early stop scoring history content
+        int trueColIndex = colIndex + glmColSize;
+        combined.set(rowIndex, trueColIndex, earlyStopSc2.get(rowIndex, earlyStopColIndices.get(colIndex)));
+      }
+    }
+    return combined;
+  }
+  
   public static void updateGradGam(double[] gradient, double[][][] penalty_mat, int[][] gamBetaIndices, double[] beta,
                                    int[] activeCols) { // update gradient due to gam smoothness constraint
     int numGamCol = gamBetaIndices.length; // number of predictors used for gam
