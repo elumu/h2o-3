@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import hex.ModelCategory;
 import hex.genmodel.GenModel;
 import hex.genmodel.MojoModel;
+import hex.genmodel.algos.gam.GamMojoModelBase;
 import hex.genmodel.algos.glrm.GlrmMojoModel;
 import hex.genmodel.algos.pca.PCAMojoModel;
 import hex.genmodel.algos.tree.SharedTreeMojoModel;
@@ -238,8 +239,10 @@ public class PredictCsv {
       String[] splitLine;
       //Reader in the column names here.
       if ((splitLine = reader.readNext()) != null) {
-        inputColumnNames = splitLine;
+        inputColumnNames = splitLine; // contains the column names of input data
         checkMissingColumns(inputColumnNames);
+        if (model.m instanceof GamMojoModelBase)
+          ((GamMojoModelBase) model.m).setPredictColumNum(inputColumnNames);
       }
       else  // file empty, throw an error
         throw new Exception("Input dataset file is empty!");

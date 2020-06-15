@@ -1,6 +1,7 @@
 package hex;
 
 import hex.genmodel.*;
+import hex.genmodel.algos.gam.GamMojoModelBase;
 import hex.genmodel.algos.glrm.GlrmMojoModel;
 import hex.genmodel.algos.tree.SharedTreeGraph;
 import hex.genmodel.algos.tree.SharedTreeMojoModel;
@@ -2362,7 +2363,7 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
             e.printStackTrace();
           }
         }
-
+        
         SharedTreeGraph[] trees = null;
         if (genmodel instanceof SharedTreeMojoModel) {
           SharedTreeMojoModel treemodel = (SharedTreeMojoModel) genmodel;
@@ -2380,6 +2381,9 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
                   .setEnableStagedProbabilities(genmodel instanceof SharedTreeMojoModel)
                   .setUseExternalEncoding(true); // input Frame is already adapted!
           epmw = new EasyPredictModelWrapper(config);
+          if (genmodel instanceof GamMojoModelBase) {
+            ((GamMojoModelBase) genmodel).setPredictColumNum(genmodel._names);
+          }
         } catch (IOException e) {
           throw new RuntimeException(e);
         }
