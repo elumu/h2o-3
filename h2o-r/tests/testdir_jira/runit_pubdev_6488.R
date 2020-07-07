@@ -61,8 +61,8 @@ test.tree.fetch <- function() {
   for (i in seq(1,ntrees)) {
     tree <- h2o.getModelTree(model, i)
     expect_false(is.null(tree))
-      expect_false(is.null(tree@language_tree_representation))
-      expect_false(is.null(tree@language_path_representations[1]))
+    expect_false(is.null(tree@language_tree_representation))
+    expect_false(is.null(tree@language_path_representations[1]))
   }
   
   
@@ -84,8 +84,8 @@ test.tree.fetch <- function() {
     for(clazz in domain){
     tree <- h2o.getModelTree(model, i,as.character(clazz))
     expect_false(is.null(tree))
-        expect_false(is.null(tree@language_tree_representation))
-        expect_false(is.null(tree@language_path_representations[1]))
+    expect_false(is.null(tree@language_tree_representation))
+    expect_false(is.null(tree@language_path_representations[1]))
     }
   }
   
@@ -111,8 +111,8 @@ test.tree.fetch <- function() {
     for(clazz in states){
       tree <- h2o.getModelTree(model, i,as.character(clazz))
       expect_false(is.null(tree))
-        expect_false(is.null(tree@language_tree_representation))
-        expect_false(is.null(tree@language_path_representations[1]))
+      expect_false(is.null(tree@language_tree_representation))
+      expect_false(is.null(tree@language_path_representations[1]))
     }
   }
   
@@ -137,8 +137,8 @@ test.tree.fetch <- function() {
   for (i in seq(1,ntrees)) {
     tree <- h2o.getModelTree(model, i)
     expect_false(is.null(tree))
-      expect_false(is.null(tree@language_tree_representation))
-      expect_false(is.null(tree@language_path_representations[1]))
+    expect_false(is.null(tree@language_tree_representation))
+    expect_false(is.null(tree@language_path_representations[1]))
   }
 
 }
