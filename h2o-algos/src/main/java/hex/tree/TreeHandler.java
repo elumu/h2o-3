@@ -71,45 +71,41 @@ public class TreeHandler extends Handler {
 
 
     private static String getLanguageRepresentation(SharedTreeSubgraph sharedTreeSubgraph) {
-        return getNodeRepresentation(sharedTreeSubgraph.rootNode, "", 0);
+        return getNodeRepresentation(sharedTreeSubgraph.rootNode, new StringBuilder(), 0).toString();
     }
 
-    private static String getNodeRepresentation(SharedTreeNode node, String languageRepresentation, int padding) {
-        if (node.getLeftChild() != null || node.getRightChild() != null) {
-            if (padding != 0)
-                languageRepresentation += getNewPaddedLine(padding);
-            languageRepresentation += getConditionLine(node);
-            if (node.getRightChild() != null) {
-                languageRepresentation += getNewPaddedLine(padding);
-                languageRepresentation = getNodeRepresentation(node.getRightChild(), languageRepresentation, padding + 1);
-            }
-            languageRepresentation += getNewPaddedLine(padding);
-            languageRepresentation += getElseLine(node);
-            if (node.getLeftChild() != null) {
-                languageRepresentation += getNewPaddedLine(padding);
-                languageRepresentation = getNodeRepresentation(node.getLeftChild(), languageRepresentation, padding + 1);
-            }
-            languageRepresentation += getNewPaddedLine(padding);
-            languageRepresentation += "}";
+    private static StringBuilder getNodeRepresentation(SharedTreeNode node, StringBuilder languageRepresentation, int padding) {
+        if (node.getRightChild() != null) {
+            languageRepresentation.append(getConditionLine(node, padding));
+            languageRepresentation.append(getNewPaddedLine(padding));
+            languageRepresentation = getNodeRepresentation(node.getRightChild(), languageRepresentation, padding +1);
+            languageRepresentation.append(getNewPaddedLine(padding));
+            languageRepresentation.append(getElseLine(node));
+            languageRepresentation.append(getNewPaddedLine(padding));
+            languageRepresentation = getNodeRepresentation(node.getLeftChild(), languageRepresentation, padding + 1);
+            languageRepresentation.append(getNewPaddedLine(padding));
+            languageRepresentation.append("}");
         } else {
+            languageRepresentation.append(getNewPaddedLine(padding));
             if (Float.compare(node.getPredValue(),Float.NaN) != 0) {
-                languageRepresentation += getNewPaddedLine(padding);
-                languageRepresentation += "Predicted value: " + node.getPredValue();
-                languageRepresentation += getNewPaddedLine(padding);
+                languageRepresentation.append("Predicted value: " + node.getPredValue());
+            } else {
+                languageRepresentation.append("Predicted value: NaN");
             }
+            languageRepresentation.append(getNewPaddedLine(padding));
         }
         return languageRepresentation;
     }
 
-    private static String getNewPaddedLine(int padding) {
-        String line = "\n";
+    private static StringBuilder getNewPaddedLine(int padding) {
+        StringBuilder line = new StringBuilder("\n");
         for(int i = 0; i < padding; i++) {
-            line += "\t";
+            line.append("\t");
         }
         return line;
     }
 
-    private static String getElseLine(SharedTreeNode node) {
+    private static StringBuilder getElseLine(SharedTreeNode node) {
         StringBuilder elseLine = new StringBuilder();
         if (Float.compare(node.getSplitValue(),Float.NaN) != 0) {
             elseLine.append("} else {");
@@ -130,20 +126,23 @@ public class TreeHandler extends Handler {
             }
             elseLine.append("]) {");
         }
-        return elseLine.toString();
+        return elseLine;
     }
 
-    private static String getConditionLine(SharedTreeNode node) {
-        StringBuilder conditionLine;
+    private static StringBuilder getConditionLine(SharedTreeNode node, int padding) {
+        StringBuilder conditionLine = new StringBuilder();
+        if (padding != 0) {
+            conditionLine.append(getNewPaddedLine(padding)); 
+        }
         if (Float.compare(node.getSplitValue(),Float.NaN) != 0) {
-            conditionLine = new StringBuilder("If ( " + node.getColName() + " <= " + node.getSplitValue());
+            conditionLine.append("If ( " + node.getColName() + " <= " + node.getSplitValue());
             if ("RIGHT".equals(getNaDirection(node))) {
                 conditionLine.append(" or ").append(node.getColName()).append(" is NaN ) {");
             } else {
                 conditionLine.append(" ) {");
             }
         } else {
-            conditionLine = new StringBuilder("If ( " + node.getColName() + " is in [ ");
+            conditionLine.append("If ( " + node.getColName() + " is in [ ");
             // get inclusive levels:
             SharedTreeNode rightChild = node.getRightChild();
             String stringToParseInclusiveLevelsFrom = rightChild.getInclusiveLevels().toString();
@@ -161,7 +160,7 @@ public class TreeHandler extends Handler {
             }
             conditionLine.append("]) {");
         }
-        return conditionLine.toString();
+        return conditionLine;
     }
 
     private static int getResponseLevelIndex(final String categorical, final SharedTreeModel.SharedTreeOutput sharedTreeOutput) {
