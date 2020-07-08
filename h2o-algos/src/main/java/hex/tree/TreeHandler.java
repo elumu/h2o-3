@@ -153,8 +153,7 @@ public class TreeHandler extends Handler {
                 stringToParseInclusiveLevelsFrom = stringToParseInclusiveLevelsFrom.substring(1, inclusiveLevelsLength - 1);
                 String[] inclusiveLevels = stringToParseInclusiveLevelsFrom.split(",");
                 Arrays.stream(inclusiveLevels)
-                        .map(String::trim)
-                        .map(Integer::parseInt)
+                        .map(level -> Integer.parseInt(level.trim()))
                         .forEach(index -> conditionLine.append(node.getDomainValues()[index] + " "));
             } else {
                 conditionLine.append("Missing set of levels for underlying node");
@@ -311,6 +310,7 @@ public class TreeHandler extends Handler {
     private static String fillNodePath(int nodeId, ArrayList<Integer> nodeIds, boolean valuePrinted, TreeProperties properties, String[] domainValues){
         int parentIndex = -1;
         int parentId = -1;
+        int firstNonemployedFieldId;
         String condition = "";
         String nodePathr = "";
         int currentNodeIndex = nodeIds.indexOf(nodeId);
@@ -323,17 +323,22 @@ public class TreeHandler extends Handler {
             // print conditions leading to prediction value
             int[] leftChildren = properties._leftChildren;
             int[] rightChildren = properties._rightChildren;
-            if (IntStream.of(leftChildren).anyMatch(i -> i == currentNodeIndex)) {
-                // parent from right
-                parentIndex = IntStream.range(0, leftChildren.length).filter(i -> leftChildren[i] == currentNodeIndex).findAny().getAsInt();
+            
+            firstNonemployedFieldId = Arrays.binarySearch(leftChildren, -1);
+            if (Arrays.binarySearch(Arrays.copyOfRange(leftChildren, 0, firstNonemployedFieldId), currentNodeIndex) >= 0) {
+                parentIndex = IntStream.range(0, leftChildren.length).filter(j -> leftChildren[j] == currentNodeIndex).findAny().getAsInt();
                 parentId = nodeIds.get(parentIndex);
                 condition = getConditionByIndex(parentIndex, "R", properties, domainValues);
             }
-            if (IntStream.of(rightChildren).anyMatch(i -> i == currentNodeIndex)) {
-                parentIndex = IntStream.range(0, rightChildren.length).filter(i -> rightChildren[i] == currentNodeIndex).findAny().getAsInt();
+            
+            firstNonemployedFieldId = Arrays.binarySearch(rightChildren, -1);
+            int[] sortedRightChildren = Arrays.copyOfRange(rightChildren, 0, firstNonemployedFieldId);
+            if (Arrays.binarySearch(sortedRightChildren, currentNodeIndex) >= 0) {
+                parentIndex = IntStream.range(0, rightChildren.length).filter(j -> rightChildren[j] == currentNodeIndex).findAny().getAsInt();
                 parentId = nodeIds.get(parentIndex);
                 condition = getConditionByIndex(parentIndex, "L", properties, domainValues);
             }
+            
             if (parentIndex != -1) {
                 nodePathr += "^\n";
                 nodePathr += "|\n";
