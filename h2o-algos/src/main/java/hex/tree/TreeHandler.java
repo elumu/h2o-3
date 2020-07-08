@@ -153,7 +153,8 @@ public class TreeHandler extends Handler {
                 stringToParseInclusiveLevelsFrom = stringToParseInclusiveLevelsFrom.substring(1, inclusiveLevelsLength - 1);
                 String[] inclusiveLevels = stringToParseInclusiveLevelsFrom.split(",");
                 Arrays.stream(inclusiveLevels)
-                        .map(level -> Integer.parseInt(level.trim()))
+                        .map(String::trim)
+                        .map(Integer::parseInt)
                         .forEach(index -> conditionLine.append(node.getDomainValues()[index] + " "));
             } else {
                 conditionLine.append("Missing set of levels for underlying node");
@@ -210,7 +211,8 @@ public class TreeHandler extends Handler {
         treeprops._predictions = MemoryManager.malloc4f(sharedTreeSubgraph.nodesArray.size());
         treeprops._leafNodeAssignments = new String[sharedTreeSubgraph.nodesArray.size()];
         treeprops._languagePathsRepresentations = new String[sharedTreeSubgraph.nodesArray.size()];
-
+        treeprops._leftChildrenNormalized = MemoryManager.malloc4(sharedTreeSubgraph.nodesArray.size());
+        treeprops._rightChildrenNormalized = MemoryManager.malloc4(sharedTreeSubgraph.nodesArray.size());
 
         // Set root node's children, there is no guarantee the root node will be number 0
         treeprops._rightChildren[0] = sharedTreeSubgraph.rootNode.getRightChild() != null ? sharedTreeSubgraph.rootNode.getRightChild().getNodeNumber() : -1;
@@ -221,7 +223,8 @@ public class TreeHandler extends Handler {
         treeprops.levels = new int[sharedTreeSubgraph.nodesArray.size()][];
         treeprops._languageTreeRepresentation = getLanguageRepresentation(sharedTreeSubgraph);
         treeprops._languagePathsRepresentations[0] = "Predicted value: " + sharedTreeSubgraph.rootNode.getPredValue();
-
+        treeprops._leftChildrenNormalized[0] = sharedTreeSubgraph.rootNode.getLeftChild() != null ? sharedTreeSubgraph.rootNode.getLeftChild().getNodeNumber() : -1;
+        treeprops._rightChildrenNormalized[0] = sharedTreeSubgraph.rootNode.getRightChild() != null ? sharedTreeSubgraph.rootNode.getRightChild().getNodeNumber() : -1;    
 
         List<SharedTreeNode> nodesToTraverse = new ArrayList<>();
         nodesToTraverse.add(sharedTreeSubgraph.rootNode);
@@ -287,13 +290,17 @@ public class TreeHandler extends Handler {
             if (properties._leftChildren[i] != -1) {
                 nodeId++;
                 nodeIds.add(properties._leftChildren[i]);
-                properties._leftChildren[i] = nodeId;
+                properties._leftChildrenNormalized[i] = nodeId;
+            } else {
+                properties._leftChildrenNormalized[i] = -1;
             }
 
             if (properties._rightChildren[i] != -1) {
                 nodeId++;
                 nodeIds.add(properties._rightChildren[i]);
-                properties._rightChildren[i] = nodeId;
+                properties._rightChildrenNormalized[i] = nodeId;
+            } else {
+                properties._rightChildrenNormalized[i] = -1;
             }
         }
         return nodeIds;
@@ -321,8 +328,8 @@ public class TreeHandler extends Handler {
             nodePathr += fillNodePath(nodeId, nodeIds, valuePrinted, properties, domainValues);
         } else {
             // print conditions leading to prediction value
-            int[] leftChildren = properties._leftChildren;
-            int[] rightChildren = properties._rightChildren;
+            int[] leftChildren = properties._leftChildrenNormalized;
+            int[] rightChildren = properties._rightChildrenNormalized;
             
             firstNonemployedFieldId = Arrays.binarySearch(leftChildren, -1);
             if (Arrays.binarySearch(Arrays.copyOfRange(leftChildren, 0, firstNonemployedFieldId), currentNodeIndex) >= 0) {
@@ -358,7 +365,7 @@ public class TreeHandler extends Handler {
         int targetNodeId = -1;
         if (Float.compare(properties._thresholds[index],Float.NaN) == 0) {
             conditionLine = "If ( " + properties._features[index] + " is in [";
-            targetNodeId = "R".equals(parentOrigin) ? properties._leftChildren[index] : properties._rightChildren[index];
+            targetNodeId = "R".equals(parentOrigin) ? properties._leftChildrenNormalized[index] : properties._leftChildrenNormalized[index];
             int[] inclusiveLevels = properties.levels[targetNodeId];
             for (int level : inclusiveLevels) {
                 conditionLine += domainValues[level] + " ";
@@ -545,6 +552,8 @@ public class TreeHandler extends Handler {
         public String _languageTreeRepresentation;
         public String[] _leafNodeAssignments;
         public String[] _languagePathsRepresentations;
+        private int[] _leftChildrenNormalized;
+        private int[] _rightChildrenNormalized;
 
     }
 }
