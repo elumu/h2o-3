@@ -32,11 +32,8 @@ def decision_tree_language_rules_printing():
     print(" -- Language tree representation: -- ")
     assert first_tree.language_tree_representation is not None
     print(first_tree.language_tree_representation)
-    text_file = open("pyunit_4007_language_tree_representation_numerical_case.txt", "r")
-    expected_tree_representation = text_file.read()
-    text_file.close()
-    assert expected_tree_representation == first_tree.language_tree_representation
-    
+    assert read_fixture("pyunit_4007_language_tree_representation_numerical_case.txt") == first_tree.language_tree_representation
+
     print(" -- Language path representation - root node: -- ")
     assert first_tree.language_path_representations[first_tree.root_node.id] is not None
     print(first_tree.language_path_representations[first_tree.root_node.id])
@@ -44,10 +41,7 @@ def decision_tree_language_rules_printing():
     print(" -- Language path representation - node ", first_tree.predictions.index(first_tree.predictions[3]), " (with pv = ", first_tree.predictions[3], "): -- ")
     assert first_tree.language_path_representations[first_tree.predictions.index(first_tree.predictions[3])] is not None
     print(first_tree.language_path_representations[first_tree.predictions.index(first_tree.predictions[3])])
-    text_file = open("pyunit_4007_language_path_representation_numerical_case.txt", "r")
-    expected_tree_representation = text_file.read()
-    text_file.close()
-    assert expected_tree_representation == first_tree.language_path_representations[first_tree.predictions.index(first_tree.predictions[3])]
+    assert read_fixture("pyunit_4007_language_path_representation_numerical_case.txt") == first_tree.language_path_representations[first_tree.predictions.index(first_tree.predictions[3])]
     
     print(" ----- categorical case: -----")
     airlines_data = h2o.import_file(path=pyunit_utils.locate("smalldata/airlines/allyears2k_headers.zip"))
@@ -61,10 +55,7 @@ def decision_tree_language_rules_printing():
     print(" -- Language tree representation: -- ")
     assert tree.language_tree_representation is not None
     print(tree.language_tree_representation)
-    text_file = open("pyunit_4007_language_tree_representation_categorical_case.txt", "r")
-    expected_tree_representation = text_file.read()
-    text_file.close()
-    assert expected_tree_representation == tree.language_tree_representation
+    assert read_fixture("pyunit_4007_language_tree_representation_categorical_case.txt") == tree.language_tree_representation
 
     print(" -- Language path representation - root node: -- ")
     assert tree.language_path_representations[tree.root_node.id] is not None
@@ -73,10 +64,13 @@ def decision_tree_language_rules_printing():
     print(" -- Language path representation - node ", tree.predictions.index(tree.predictions[3]), " (with pv = ", tree.predictions[3], "): -- ")
     assert tree.language_path_representations[tree.predictions.index(tree.predictions[3])] is not None
     print(tree.language_path_representations[tree.predictions.index(tree.predictions[3])])
-    text_file = open("pyunit_4007_language_path_representation_categorical_case.txt", "r")
+    assert read_fixture("pyunit_4007_language_path_representation_categorical_case.txt") == tree.language_path_representations[tree.predictions.index(tree.predictions[3])]
+    
+def read_fixture(path):
+    text_file = open(pyunit_utils.locate(path), "r")
     expected_tree_representation = text_file.read()
     text_file.close()
-    assert expected_tree_representation == tree.language_path_representations[tree.predictions.index(tree.predictions[3])]
+    return expected_tree_representation
     
 if __name__ == "__main__":
     pyunit_utils.standalone_test(decision_tree_language_rules_printing)
