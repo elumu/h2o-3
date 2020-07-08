@@ -329,7 +329,7 @@ public class TreeHandler extends Handler {
         int firstNonemployedFieldId;
         String condition = "";
         String nodePathr = "";
-        int currentNodeIndex = Arrays.binarySearch(nodeIds, nodeId);
+        int currentNodeIndex = IntStream.range(0, nodeIds.length).filter(i -> nodeId == nodeIds[i]).findAny().getAsInt();
         if (!valuePrinted) {
             // print prediction value
             nodePathr += "Predicted value: " + properties._predictions[currentNodeIndex] + "\n";
@@ -374,7 +374,7 @@ public class TreeHandler extends Handler {
         int targetNodeId = -1;
         if (Float.compare(properties._thresholds[index],Float.NaN) == 0) {
             conditionLine = "If ( " + properties._features[index] + " is in [";
-            targetNodeId = "R".equals(parentOrigin) ? properties._leftChildrenNormalized[index] : properties._leftChildrenNormalized[index];
+            targetNodeId = "R".equals(parentOrigin) ? properties._leftChildrenNormalized[index] : properties._rightChildrenNormalized[index];
             int[] inclusiveLevels = properties.levels[targetNodeId];
             for (int level : inclusiveLevels) {
                 conditionLine += domainValues[level] + " ";
@@ -403,12 +403,16 @@ public class TreeHandler extends Handler {
     }
     
     private static String[] getDomainValues(final SharedTreeSubgraph sharedTreeSubgraph) {
-        if (sharedTreeSubgraph.rootNode.getRightChild() != null) 
+        if (sharedTreeSubgraph.rootNode.getDomainValues() != null) {
+            return sharedTreeSubgraph.rootNode.getDomainValues();
+        }
+        if (sharedTreeSubgraph.rootNode.getRightChild() != null && sharedTreeSubgraph.rootNode.getRightChild().getDomainValues() != null) {
             return sharedTreeSubgraph.rootNode.getRightChild().getDomainValues();
-        else if (sharedTreeSubgraph.rootNode.getLeftChild() != null)
+        }
+        if (sharedTreeSubgraph.rootNode.getLeftChild() != null && sharedTreeSubgraph.rootNode.getLeftChild().getDomainValues() != null) {
             return sharedTreeSubgraph.rootNode.getLeftChild().getDomainValues();
-        else
-            return null;
+        }
+        return null;
     }
     
     private static void fillnodeDescriptions(final SharedTreeNode node, final String[] nodeDescriptions,
