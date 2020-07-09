@@ -1,6 +1,6 @@
-If ( GLEASON <= 6.5 ) {
+If ( GLEASON >= 6.5 ) {
 
-	If ( PSA <= 14.730078 or PSA is NaN ) {
+	If ( PSA >= 14.730078 or PSA is NaN ) {
 	
 		Predicted value: 0.14800848
 		
@@ -11,7 +11,7 @@ If ( GLEASON <= 6.5 ) {
 	}
 } else {
 
-	If ( DPROS <= 2.5 ) {
+	If ( DPROS >= 2.5 ) {
 	
 		Predicted value: -0.020283366
 		

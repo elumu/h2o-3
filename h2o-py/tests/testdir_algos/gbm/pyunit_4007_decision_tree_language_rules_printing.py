@@ -1,6 +1,8 @@
 from __future__ import print_function
 from builtins import range
 import sys
+
+from h2o.estimators import H2OIsolationForestEstimator
 from h2o.tree import H2OTree
 sys.path.insert(1,"../../../")
 import h2o
@@ -65,6 +67,27 @@ def decision_tree_language_rules_printing():
     assert tree.language_path_representations[tree.predictions.index(tree.predictions[3])] is not None
     print(tree.language_path_representations[tree.predictions.index(tree.predictions[3])])
     assert read_fixture("pyunit_4007_language_path_representation_categorical_case.txt") == tree.language_path_representations[tree.predictions.index(tree.predictions[3])]
+    
+    # mixed categorical + numerical: 
+    airlines_data = h2o.import_file(path=pyunit_utils.locate("./smalldata/testng/airlines_train.csv"))
+    model = H2OIsolationForestEstimator(ntrees=10, seed = 65261, max_depth = 10)
+    model.train(y = "IsDepDelayed", training_frame=airlines_data)
+    tree = H2OTree(model = model, tree_number = 1)
+
+    print(" -- Tree predictions: -- ")
+    print(tree.predictions)
+
+    print(" -- Language tree representation: -- ")
+    assert tree.language_tree_representation is not None
+    print(tree.language_tree_representation)
+    assert read_fixture("pyunit_4007_language_tree_representation_numerical_categorical_case.txt") == tree.language_tree_representation
+
+    print(" -- Language path representation - node ", tree.predictions.index(tree.predictions[393]), " (with pv = ", tree.predictions[393], "): -- ")
+    assert tree.language_path_representations[tree.predictions.index(tree.predictions[393])] is not None
+    print(tree.language_path_representations[tree.predictions.index(tree.predictions[393])])
+
+    assert read_fixture("pyunit_4007_language_path_representation_numerical_categorical_case.txt") == tree.language_path_representations[tree.predictions.index(tree.predictions[393])]
+    
     
 def read_fixture(path):
     text_file = open(pyunit_utils.locate(path), "r")

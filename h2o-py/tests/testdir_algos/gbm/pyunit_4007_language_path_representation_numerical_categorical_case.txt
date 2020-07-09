@@ -1,0 +1,51 @@
+Predicted value: 9.0
+^
+|
+|
+|
+If ( Distance < 496.0 )
+^
+|
+|
+|
+If ( Distance >= 427.5 or Distance is NaN )
+^
+|
+|
+|
+If ( Distance < 687.5 or Distance is NaN )
+^
+|
+|
+|
+If ( Dest < 50.5 or Dest is NaN )
+^
+|
+|
+|
+If ( Origin < 53.0 )
+^
+|
+|
+|
+If ( fDayOfWeek < 3.5 or fDayOfWeek is NaN )
+^
+|
+|
+|
+If ( UniqueCarrier >= 7.5 or UniqueCarrier is NaN )
+^
+|
+|
+|
+If ( UniqueCarrier >= 5.5 or UniqueCarrier is NaN )
+^
+|
+|
+|
+If ( fYear < 7.0 )
+^
+|
+|
+|
+If ( IsDepDelayed is in [NO  ])
