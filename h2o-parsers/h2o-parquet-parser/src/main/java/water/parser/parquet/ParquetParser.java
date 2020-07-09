@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.apache.parquet.hadoop.ParquetFileWriter.MAGIC;
 
@@ -112,7 +115,7 @@ public class ParquetParser extends Parser {
     return dout;
   }
 
-  public static ParquetParseSetup guessFormatSetup(ByteVec vec, byte[] bits) {
+  public static ParquetParseSetup guessFormatSetup(final ByteVec vec, final byte[] bits, final Optional<String> mappedBy) {
     if (bits.length < MAGIC.length) {
       return null;
     }
@@ -123,12 +126,13 @@ public class ParquetParser extends Parser {
     byte[] metadataBytes = VecParquetReader.readFooterAsBytes(vec);
     ParquetMetadata metadata = VecParquetReader.readFooter(metadataBytes);
     checkCompatibility(metadata);
-    return toInitialSetup(metadata.getFileMetaData().getSchema(), metadataBytes);
+    return toInitialSetup(metadata.getFileMetaData().getSchema(), metadataBytes, mappedBy, vec._key.toString());
   }
 
-  private static ParquetParseSetup toInitialSetup(MessageType parquetSchema, byte[] metadataBytes) {
-    byte[] roughTypes = roughGuessTypes(parquetSchema);
-    String[] columnNames = columnNames(parquetSchema);
+  private static ParquetParseSetup toInitialSetup(MessageType parquetSchema, byte[] metadataBytes, Optional<String> mappedBy,
+                                                  String vecKey) {
+    byte[] roughTypes = roughGuessTypes(parquetSchema, mappedBy, vecKey);
+    String[] columnNames = columnNames(parquetSchema, mappedBy);
     return new ParquetParseSetup(columnNames, roughTypes, null, metadataBytes);
   }
 
@@ -139,14 +143,16 @@ public class ParquetParser extends Parser {
 
   /**
    * Overrides unsupported type conversions/mappings specified by the user.
-   * @param vec byte vec holding bin\ary parquet data
+   *
+   * @param vec            byte vec holding bin\ary parquet data
    * @param requestedTypes user-specified target types
    * @return corrected types
    */
-  public static byte[] correctTypeConversions(ByteVec vec, byte[] requestedTypes) {
+  public static byte[] correctTypeConversions(ByteVec vec, byte[] requestedTypes, final Optional<String> mappedBy,
+                                              final String vecKey) {
     byte[] metadataBytes = VecParquetReader.readFooterAsBytes(vec);
     ParquetMetadata metadata = VecParquetReader.readFooter(metadataBytes, ParquetMetadataConverter.NO_FILTER);
-    byte[] roughTypes = roughGuessTypes(metadata.getFileMetaData().getSchema());
+    byte[] roughTypes = roughGuessTypes(metadata.getFileMetaData().getSchema(), mappedBy, vecKey);
     return correctTypeConversions(roughTypes, requestedTypes);
   }
 
@@ -205,8 +211,8 @@ public class ParquetParser extends Parser {
     public ParquetParseSetup() { super(); }
     public ParquetParseSetup(String[] columnNames, byte[] ctypes, String[][] data, byte[] parquetMetadata) {
       super(ParquetParserProvider.PARQUET_INFO, (byte) '|', true, ParseSetup.HAS_HEADER,
-              columnNames.length, columnNames, ctypes,
-              new String[columnNames.length][] /* domains */, null /* NA strings */, data);
+          columnNames.length, columnNames, ctypes,
+          new String[columnNames.length][] /* domains */, null /* NA strings */, data, null);
       this.parquetMetadata = parquetMetadata;
     }
   }
@@ -257,15 +263,23 @@ public class ParquetParser extends Parser {
     }
   }
 
-  private static byte[] roughGuessTypes(MessageType messageType) {
-    byte[] types = new byte[messageType.getPaths().size()];
-    for (int i = 0; i < types.length; i++) {
+  private static byte[] roughGuessTypes(final MessageType messageType, final Optional<String> mappedBy, final String vecKey) {
+    final int columnCount = messageType.getPaths().size() + (mappedBy.isPresent() ? 1 : 0);
+    byte[] types = new byte[columnCount];
+    for (int i = 0; i < types.length - 1; i++) {
       Type parquetType = messageType.getType(i);
       assert parquetType.isPrimitive();
       OriginalType ot = parquetType.getOriginalType();
       PrimitiveType pt = parquetType.asPrimitiveType();
       types[i] = convertType(ot, pt);
     }
+
+    final Pattern mappedByColumnValue = Pattern.compile(".*" + Pattern.quote(mappedBy.get()) + "=" + "(.*)/.*");
+    final Matcher matcher = mappedByColumnValue.matcher(vecKey);
+    if (matcher.matches()) {
+      types[columnCount - 1] = Vec.T_STR;
+    }
+
     return types;
   }
 
@@ -291,13 +305,17 @@ public class ParquetParser extends Parser {
         return Vec.T_BAD;
     }
   }
-  
-  private static String[] columnNames(MessageType messageType) {
-    String[] colNames = new String[messageType.getPaths().size()];
+
+  private static String[] columnNames(MessageType messageType, Optional<String> mappedBy) {
+    final int columnCount = messageType.getPaths().size() + (mappedBy.isPresent() ? 1 : 0);
+    String[] colNames = new String[columnCount];
     int i = 0;
     for (String[] path : messageType.getPaths()) {
       assert path.length == 1;
       colNames[i++] = path[0];
+    }
+    if (mappedBy.isPresent()) {
+      colNames[columnCount - 1] = mappedBy.get();
     }
     return colNames;
   }

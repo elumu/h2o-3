@@ -8,6 +8,8 @@ import water.fvec.Frame;
 import water.fvec.Vec;
 import water.parser.*;
 
+import java.util.Optional;
+
 /**
  * Parquet parser provider.
  */
@@ -28,7 +30,7 @@ public class ParquetParserProvider extends BinaryParserProvider {
 
   @Override
   public ParseSetup guessInitSetup(ByteVec v, byte[] bits, ParseSetup userSetup) {
-    return ParquetParser.guessFormatSetup(v, bits);
+    return ParquetParser.guessFormatSetup(v, bits, Optional.ofNullable(userSetup.getPartitionBy()));
   }
 
   @Override
@@ -54,7 +56,8 @@ public class ParquetParserProvider extends BinaryParserProvider {
     Object frameOrVec = DKV.getGet(inputs[0]);
     ByteVec vec = (ByteVec) (frameOrVec instanceof Frame ? ((Frame) frameOrVec).vec(0) : frameOrVec);
     byte[] requestedTypes = setup.getColumnTypes();
-    byte[] types = ParquetParser.correctTypeConversions(vec, requestedTypes);
+    byte[] types = ParquetParser.correctTypeConversions(vec, requestedTypes, Optional.ofNullable(requestedSetup.getPartitionBy()),
+        vec._key.toString());
     setup.setColumnTypes(types);
     for (int i = 0; i < types.length; i++)
       if (types[i] != requestedTypes[i])

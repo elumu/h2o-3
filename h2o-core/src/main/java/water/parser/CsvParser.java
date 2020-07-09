@@ -713,7 +713,7 @@ MAIN_LOOP:
           }
           //FIXME should set warning message and let fall through
           return new ParseSetup(CSV_INFO, GUESS_SEP, singleQuotes, checkHeader, 1, null, ctypes, domains, naStrings, data, new ParseWriter.ParseErr[0],FileVec.DFLT_CHUNK_SIZE,
-                  nonDataLineMarkers);
+                  nonDataLineMarkers, null);
         }
       }
       data[0] = determineTokens(lines[0], sep, singleQuotes);
@@ -773,7 +773,7 @@ MAIN_LOOP:
 
     // Assemble the setup understood so far
     ParseSetup resSetup = new ParseSetup(CSV_INFO, sep, singleQuotes, checkHeader, ncols, labels, null, null /*domains*/, naStrings, data,
-            nonDataLineMarkers);
+            nonDataLineMarkers, null);
 
     // now guess the types
     if (columnTypes == null || ncols != columnTypes.length) {

@@ -42,6 +42,7 @@ public class ParseSetup extends Iced {
   String[][] _data;           // First few rows of parsed/tokenized data
   int[] _parse_columns_indices; // store column indices to be parsed into the final file
   byte[] _nonDataLineMarkers;
+  String _partitionBy;
 
   String[] _synthetic_column_names; // Columns with constant values to be added to parsed Frame
   String[][] _synthetic_column_values; // For each imported file contains array of values for each synthetic column
@@ -64,10 +65,11 @@ public class ParseSetup extends Iced {
 
   public ParseSetup(ParseSetup ps) {
     this(ps._parse_type,
-         ps._separator, ps._single_quotes, ps._check_header, ps._number_columns,
-         ps._column_names, ps._column_types, ps._domains, ps._na_strings, ps._data,
-            new ParseWriter.ParseErr[0], ps._chunk_size, ps._decrypt_tool, ps._skipped_columns,
-            ps._nonDataLineMarkers);
+        ps._separator, ps._single_quotes, ps._check_header, ps._number_columns,
+        ps._column_names, ps._column_types, ps._domains, ps._na_strings, ps._data,
+        new ParseWriter.ParseErr[0], ps._chunk_size, ps._decrypt_tool, ps._skipped_columns,
+        ps._nonDataLineMarkers,
+        ps._partitionBy);
   }
 
   public static ParseSetup makeSVMLightSetup(){
@@ -79,13 +81,15 @@ public class ParseSetup extends Iced {
   // when it is called again, it either contains the guess column types or it will have user defined column types
   public ParseSetup(ParserInfo parse_type, byte sep, boolean singleQuotes, int checkHeader, int ncols, String[] columnNames,
                     byte[] ctypes, String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs,
-                    int chunkSize, byte[] nonDataLineMarkers) {
+                    int chunkSize, byte[] nonDataLineMarkers, final String partitionBy) {
     this(parse_type, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes, domains, naStrings, data, errs,
-            chunkSize, null, null, nonDataLineMarkers);
+        chunkSize, null, null, nonDataLineMarkers, partitionBy);
   }
+
   public ParseSetup(ParserInfo parse_type, byte sep, boolean singleQuotes, int checkHeader, int ncols, String[] columnNames,
                     byte[] ctypes, String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs,
-                    int chunkSize, Key<DecryptionTool> decrypt_tool, int[] skipped_columns, byte[] nonDataLineMarkers) {
+                    int chunkSize, Key<DecryptionTool> decrypt_tool, int[] skipped_columns, byte[] nonDataLineMarkers,
+                    final String partitionBy) {
     _parse_type = parse_type;
     _separator = sep;
     _nonDataLineMarkers = nonDataLineMarkers;
@@ -102,6 +106,7 @@ public class ParseSetup extends Iced {
     _decrypt_tool = decrypt_tool;
     _skipped_columns = skipped_columns;
     setParseColumnIndices(ncols, _skipped_columns);
+    _partitionBy = partitionBy;
   }
 
   public void setParseColumnIndices(int ncols, int[] skipped_columns) {
@@ -138,66 +143,71 @@ public class ParseSetup extends Iced {
    */
   public ParseSetup(ParseSetupV3 ps) {
     this(ps.parse_type != null ? ParserService.INSTANCE.getByName(ps.parse_type).info() : GUESS_INFO,
-         ps.separator != 0 ? ps.separator : GUESS_SEP,
-         ps.single_quotes,
-         ps.check_header,
-         GUESS_COL_CNT,
-         ps.column_names, strToColumnTypes(ps.column_types),
-         null, ps.na_strings,
-         null,
-         new ParseWriter.ParseErr[0],
-         ps.chunk_size,
-            ps.decrypt_tool != null ? ps.decrypt_tool.key() : null, ps.skipped_columns,
-            ps.custom_non_data_line_markers != null ? ps.custom_non_data_line_markers.getBytes() : null);
+        ps.separator != 0 ? ps.separator : GUESS_SEP,
+        ps.single_quotes,
+        ps.check_header,
+        GUESS_COL_CNT,
+        ps.column_names, strToColumnTypes(ps.column_types),
+        null, ps.na_strings,
+        null,
+        new ParseWriter.ParseErr[0],
+        ps.chunk_size,
+        ps.decrypt_tool != null ? ps.decrypt_tool.key() : null, ps.skipped_columns,
+        ps.custom_non_data_line_markers != null ? ps.custom_non_data_line_markers.getBytes() : null,
+        ps.partitionedBy);
   }
 
   /**
    * Create a ParseSetup with all parameters except chunk size.
-   *
+   * <p>
    * Typically used by file type parsers for returning final valid results
    * _chunk_size will be set later using results from all files.
    */
   public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader,
                     int ncols, String[] columnNames, byte[] ctypes,
-                    String[][] domains, String[][] naStrings, String[][] data, byte[] nonDataLineMarkers) {
+                    String[][] domains, String[][] naStrings, String[][] data, byte[] nonDataLineMarkers, final String partitionBy) {
     this(parseType, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes,
-        domains, naStrings, data, new ParseWriter.ParseErr[0], FileVec.DFLT_CHUNK_SIZE, nonDataLineMarkers);
+        domains, naStrings, data, new ParseWriter.ParseErr[0], FileVec.DFLT_CHUNK_SIZE, nonDataLineMarkers, partitionBy);
   }
 
   /**
    * Create a ParseSetup with all parameters except chunk size.
-   *
+   * <p>
    * Typically used by file type parsers for returning final valid results
    * _chunk_size will be set later using results from all files.
    */
   public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader,
                     int ncols, String[] columnNames, byte[] ctypes,
-                    String[][] domains, String[][] naStrings, String[][] data) {
+                    String[][] domains, String[][] naStrings, String[][] data, final String partitionBy) {
     this(parseType, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes,
-            domains, naStrings, data, new ParseWriter.ParseErr[0], FileVec.DFLT_CHUNK_SIZE, null);
-  }
-  
-  public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader,
-                    int ncols, String[] columnNames, byte[] ctypes,
-                    String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs, byte[] nonDataLineMarkers) {
-    this(parseType, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes,
-            domains, naStrings, data, errs, FileVec.DFLT_CHUNK_SIZE, nonDataLineMarkers);
+        domains, naStrings, data, new ParseWriter.ParseErr[0], FileVec.DFLT_CHUNK_SIZE, null, partitionBy);
   }
 
   public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader,
                     int ncols, String[] columnNames, byte[] ctypes,
-                    String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs) {
+                    String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs, byte[] nonDataLineMarkers,
+                    final String partitionBy) {
     this(parseType, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes,
-            domains, naStrings, data, errs, FileVec.DFLT_CHUNK_SIZE, null);
+        domains, naStrings, data, errs, FileVec.DFLT_CHUNK_SIZE, nonDataLineMarkers, partitionBy);
+  }
+
+  public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader,
+                    int ncols, String[] columnNames, byte[] ctypes,
+                    String[][] domains, String[][] naStrings, String[][] data, ParseWriter.ParseErr[] errs,
+                    final String partitionBy) {
+    this(parseType, sep, singleQuotes, checkHeader, ncols, columnNames, ctypes,
+        domains, naStrings, data, errs, FileVec.DFLT_CHUNK_SIZE, null, partitionBy);
   }
 
   /**
    * Create a ParseSetup without any column information
-   *
+   * <p>
    * Typically used by file type parsers for returning final invalid results
    */
-  public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader, int ncols, String[][] data, ParseWriter.ParseErr[] errs) {
-    this(parseType, sep, singleQuotes, checkHeader, ncols, null, null, null, null, data, errs, FileVec.DFLT_CHUNK_SIZE, null);
+  public ParseSetup(ParserInfo parseType, byte sep, boolean singleQuotes, int checkHeader, int ncols, String[][] data, ParseWriter.ParseErr[] errs,
+                    final String partitionBy) {
+    this(parseType, sep, singleQuotes, checkHeader, ncols, null, null, null, null, data, errs, FileVec.DFLT_CHUNK_SIZE, null,
+        partitionBy);
   }
 
   /**
@@ -336,7 +346,7 @@ public class ParseSetup extends Iced {
    * @return ParseSetup settings from looking at all files
    */
   public static ParseSetup guessSetup(Key[] fkeys, boolean singleQuote, int checkHeader) {
-    return guessSetup(fkeys, new ParseSetup(GUESS_INFO, GUESS_SEP, singleQuote, checkHeader, GUESS_COL_CNT, null, new ParseWriter.ParseErr[0]));
+    return guessSetup(fkeys, new ParseSetup(GUESS_INFO, GUESS_SEP, singleQuote, checkHeader, GUESS_COL_CNT, null, new ParseWriter.ParseErr[0], null));
   }
 
   /**
@@ -663,7 +673,7 @@ public class ParseSetup extends Iced {
    */
   private ParseSetup toInitialSetup() {
     return new ParseSetup(_parse_type, _separator, _single_quotes, _check_header, GUESS_COL_CNT, _column_names,
-            _column_types, null, null, null, _nonDataLineMarkers);
+        _column_types, null, null, null, _nonDataLineMarkers, _partitionBy);
   }
 
   /**
@@ -844,4 +854,7 @@ public class ParseSetup extends Iced {
     return this;
   }
 
+  public String getPartitionBy() {
+    return _partitionBy;
+  }
 } // ParseSetup state class

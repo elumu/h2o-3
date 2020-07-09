@@ -490,7 +490,7 @@ public class OrcParser extends Parser {
                          boolean[] toInclude,
                          String[] allColNames, ParseWriter.ParseErr[] errs) {
       super(OrcParserProvider.ORC_INFO, (byte) '|', true, HAS_HEADER ,
-          ncols, columnNames, ctypes, domains, naStrings, data, errs);
+          ncols, columnNames, ctypes, domains, naStrings, data, errs, null);
       this.orcFileReader = orcReader;
       this.columnTypesString = columntypes;
       this.toInclude = toInclude;

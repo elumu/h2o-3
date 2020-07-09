@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -788,7 +790,10 @@ public final class ParseDataset {
           Log.info("Key " + key + " will be parsed using method " + pm + ".");
 
           if(pm == ParserInfo.ParseMethod.DistributedParse) {
-            new DistributedParse(_vg, localSetup, _vecIdStart, chunkStartIdx, this, key, vec.nChunks()).dfork(vec).getResult(false);
+            
+            new DistributedParse(_vg, localSetup, _vecIdStart, chunkStartIdx, this, key, vec.nChunks(), _parseSetup._partitionBy,
+                    ArrayUtils.indexOf(_parseSetup._column_names, _parseSetup._partitionBy))
+                    .dfork(vec).getResult(false);
             for( int i = 0; i < vec.nChunks(); ++i )
               _chunk2ParseNodeMap[chunkStartIdx + i] = vec.chunkKey(i).home_node().index();
           } else if(pm == ParserInfo.ParseMethod.StreamParse || pm == ParserInfo.ParseMethod.SequentialParse){
@@ -908,8 +913,11 @@ public final class ParseDataset {
       private transient NonBlockingSetInt _visited;
       private transient long [] _espc;
       final int _nchunks;
+      private final String _partitionedBy;
+      private final int _partitionedByIndex;
 
-      DistributedParse(VectorGroup vg, ParseSetup setup, int vecIdstart, int startChunkIdx, MultiFileParseTask mfpt, Key srckey, int nchunks) {
+      DistributedParse(VectorGroup vg, ParseSetup setup, int vecIdstart, int startChunkIdx, MultiFileParseTask mfpt, Key srckey, int nchunks,
+                       final String partitionedBy, final int partitionedByIndex) {
         super(null);
         _vg = vg;
         _setup = setup;
@@ -920,6 +928,8 @@ public final class ParseDataset {
         _jobKey = mfpt._jobKey;
         _srckey = srckey;
         _nchunks = nchunks;
+        _partitionedBy = partitionedBy;
+        _partitionedByIndex = partitionedByIndex;
       }
       @Override public void setupLocal(){
         super.setupLocal();
@@ -979,6 +989,13 @@ public final class ParseDataset {
                   " can be returned."); // Need this to send error message to R
 
         p.parseChunk(in.cidx(), din, dout);
+        final Pattern pattern = Pattern.compile(".*/" + _partitionedBy + "=(.*)/.*");
+        Matcher matcher = pattern.matcher(in.vec()._key.toString());
+        matcher.matches();
+        final String partitionValue = matcher.group(1);
+        for (int i = 0; i < in.len(); i++) {
+          dout.addNumCol(_partitionedByIndex, Integer.parseInt(partitionValue));
+        }
         (_dout = dout).close(_fs);
         Job.update(in._len, _jobKey); // Record bytes parsed
         // remove parsed data right away
