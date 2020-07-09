@@ -223,7 +223,7 @@ public class TreeHandler extends Handler {
         treeprops._languageTreeRepresentation = getLanguageRepresentation(sharedTreeSubgraph);
         treeprops._languagePathsRepresentations[0] = "Predicted value: " + sharedTreeSubgraph.rootNode.getPredValue();
         treeprops._leftChildrenNormalized[0] = sharedTreeSubgraph.rootNode.getLeftChild() != null ? sharedTreeSubgraph.rootNode.getLeftChild().getNodeNumber() : -1;
-        treeprops._rightChildrenNormalized[0] = sharedTreeSubgraph.rootNode.getRightChild() != null ? sharedTreeSubgraph.rootNode.getRightChild().getNodeNumber() : -1;    
+        treeprops._rightChildrenNormalized[0] = sharedTreeSubgraph.rootNode.getRightChild() != null ? sharedTreeSubgraph.rootNode.getRightChild().getNodeNumber() : -1;
 
         List<SharedTreeNode> nodesToTraverse = new ArrayList<>();
         nodesToTraverse.add(sharedTreeSubgraph.rootNode);
@@ -281,11 +281,14 @@ public class TreeHandler extends Handler {
                 discoveredNodes, pointer, true);
     }
 
-    private static int[] extractInternalIds(TreeProperties properties) {
+    private static ArrayList<Integer> extractInternalIds(TreeProperties properties) {
         int nodeId = 0;
+        ArrayList<Integer> nodeIds = new ArrayList<>();
+        nodeIds.add(nodeId);
         for (int i = 0; i < properties._leftChildren.length; i++) {
             if (properties._leftChildren[i] != -1) {
                 nodeId++;
+                nodeIds.add(properties._leftChildren[i]);
                 properties._leftChildrenNormalized[i] = nodeId;
             } else {
                 properties._leftChildrenNormalized[i] = -1;
@@ -293,43 +296,29 @@ public class TreeHandler extends Handler {
 
             if (properties._rightChildren[i] != -1) {
                 nodeId++;
+                nodeIds.add(properties._rightChildren[i]);
                 properties._rightChildrenNormalized[i] = nodeId;
             } else {
                 properties._rightChildrenNormalized[i] = -1;
             }
         }
-        
-        int[] nodeIds = new int[nodeId + 1];
-        nodeId = 0;
-        nodeIds[0] = nodeId;
-        for (int i = 0; i < properties._leftChildren.length; i++) {
-            if (properties._leftChildren[i] != -1) {
-                nodeId++;
-                nodeIds[nodeId] = properties._leftChildren[i];
-            }
-            
-            if (properties._rightChildren[i] != -1) {
-                nodeId++;
-                nodeIds[nodeId] = properties._rightChildren[i];
-            } 
-        }
         return nodeIds;
     }
 
     private static void fillLanguagePathRepresentation(TreeProperties properties, String[] domainValues) {
-        int[] nodeIds = extractInternalIds(properties);
-        for (int i =0;  i < nodeIds.length; i++) {
-            properties._languagePathsRepresentations[i] = fillNodePath(nodeIds[i], nodeIds, false, properties, domainValues);
-        }
+        ArrayList<Integer> nodeIds = extractInternalIds(properties);
+        nodeIds.forEach((list_path_id) -> {
+                    int index = nodeIds.indexOf(list_path_id);
+                    properties._languagePathsRepresentations[index] = fillNodePath(list_path_id, nodeIds, false, properties, domainValues);
+                });
     }
 
-    private static String fillNodePath(int nodeId, int[] nodeIds, boolean valuePrinted, TreeProperties properties, String[] domainValues){
+    private static String fillNodePath(int nodeId, ArrayList<Integer> nodeIds, boolean valuePrinted, TreeProperties properties, String[] domainValues){
         int parentIndex = -1;
         int parentId = -1;
-        int firstNonemployedFieldId;
         String condition = "";
         String nodePathr = "";
-        int currentNodeIndex = IntStream.range(0, nodeIds.length).filter(i -> nodeId == nodeIds[i]).findAny().getAsInt();
+        int currentNodeIndex = nodeIds.indexOf(nodeId);
         if (!valuePrinted) {
             // print prediction value
             nodePathr += "Predicted value: " + properties._predictions[currentNodeIndex] + "\n";
@@ -340,18 +329,16 @@ public class TreeHandler extends Handler {
             int[] leftChildren = properties._leftChildrenNormalized;
             int[] rightChildren = properties._rightChildrenNormalized;
             
-            firstNonemployedFieldId = Arrays.binarySearch(leftChildren, -1);
-            if (Arrays.binarySearch(Arrays.copyOfRange(leftChildren, 0, firstNonemployedFieldId), currentNodeIndex) >= 0) {
-                parentIndex = IntStream.range(0, leftChildren.length).filter(j -> leftChildren[j] == currentNodeIndex).findAny().getAsInt();
-                parentId = nodeIds[parentIndex];
+            if (IntStream.of(leftChildren).anyMatch(i -> i == currentNodeIndex)) {
+                // parent from right
+                parentIndex = IntStream.range(0, leftChildren.length).filter(i -> leftChildren[i] == currentNodeIndex).findAny().getAsInt();
+                parentId = nodeIds.get(parentIndex);
                 condition = getConditionByIndex(parentIndex, "R", properties, domainValues);
             }
-            
-            firstNonemployedFieldId = Arrays.binarySearch(rightChildren, -1);
-            int[] sortedRightChildren = Arrays.copyOfRange(rightChildren, 0, firstNonemployedFieldId);
-            if (Arrays.binarySearch(sortedRightChildren, currentNodeIndex) >= 0) {
-                parentIndex = IntStream.range(0, rightChildren.length).filter(j -> rightChildren[j] == currentNodeIndex).findAny().getAsInt();
-                parentId = nodeIds[parentIndex];
+
+            if (IntStream.of(rightChildren).anyMatch(i -> i == currentNodeIndex)) {
+                parentIndex = IntStream.range(0, rightChildren.length).filter(i -> rightChildren[i] == currentNodeIndex).findAny().getAsInt();
+                parentId = nodeIds.get(parentIndex);
                 condition = getConditionByIndex(parentIndex, "L", properties, domainValues);
             }
             
