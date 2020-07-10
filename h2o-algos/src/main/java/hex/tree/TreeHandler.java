@@ -107,23 +107,26 @@ public class TreeHandler extends Handler {
 
     private static StringBuilder getElseLine(SharedTreeNode node) {
         StringBuilder elseLine = new StringBuilder();
-        if (Float.compare(node.getSplitValue(),Float.NaN) != 0) {
+        if (node.getDomainValues() == null) {
             elseLine.append("} else {");
         } else {
             SharedTreeNode leftChild = node.getLeftChild();
             elseLine.append("} else if ( ").append(node.getColName()).append(" is in [ ");
-            String stringToParseInclusiveLevelsFrom = leftChild.getInclusiveLevels().toString();
-            int inclusiveLevelsLength = leftChild.getInclusiveLevels().toString().length();
-            if (inclusiveLevelsLength  > 2) {
-                // get rid of curly braces:
-                stringToParseInclusiveLevelsFrom = stringToParseInclusiveLevelsFrom.substring(1, inclusiveLevelsLength - 1);
-                String[] inclusiveLevels = stringToParseInclusiveLevelsFrom.split(",");
-                for (String index : inclusiveLevels) {
-                    elseLine.append(node.getDomainValues()[Integer.parseInt(index.trim())] + " ");
+            BitSet inclusiveLevelsSet = leftChild.getInclusiveLevels();
+            if (inclusiveLevelsSet != null) {
+                String stringToParseInclusiveLevelsFrom = inclusiveLevelsSet.toString();
+                int inclusiveLevelsLength = inclusiveLevelsSet.toString().length();
+                if (inclusiveLevelsLength  > 2) {
+                    // get rid of curly braces:
+                    stringToParseInclusiveLevelsFrom = stringToParseInclusiveLevelsFrom.substring(1, inclusiveLevelsLength - 1);
+                    String[] inclusiveLevels = stringToParseInclusiveLevelsFrom.split(",");
+                    for (String index : inclusiveLevels) {
+                        elseLine.append(node.getDomainValues()[Integer.parseInt(index.trim())] + " ");
+                    }
+                } else {
+                    elseLine.append("Missing set of levels for underlying node");
                 }
-            } else {
-                elseLine.append("Missing set of levels for underlying node");
-            }
+            } 
             elseLine.append("]) {");
         }
         return elseLine;
@@ -135,11 +138,15 @@ public class TreeHandler extends Handler {
             conditionLine.append(getNewPaddedLine(padding)); 
         }
         if (node.getDomainValues() == null) {
-            conditionLine.append("If ( " + node.getColName() + " >= " + node.getSplitValue());
-            if ("RIGHT".equals(getNaDirection(node))) {
-                conditionLine.append(" or ").append(node.getColName()).append(" is NaN ) {");
+            if (Float.compare(node.getSplitValue(),Float.NaN) == 0) {
+                conditionLine.append("If ( " + node.getColName() + " is NaN ) {");
             } else {
-                conditionLine.append(" ) {");
+                conditionLine.append("If ( " + node.getColName() + " >= " + node.getSplitValue());
+                if ("RIGHT".equals(getNaDirection(node))) {
+                    conditionLine.append(" or ").append(node.getColName()).append(" is NaN ) {");
+                } else {
+                    conditionLine.append(" ) {");
+                }
             }
         } else {
             conditionLine.append("If ( " + node.getColName() + " is in [ ");
@@ -362,7 +369,7 @@ public class TreeHandler extends Handler {
         String nanString = " or " + properties._features[index] + " is NaN";
         boolean useNan = false;
         int targetNodeId = -1;
-        if (Float.compare(properties._thresholds[index],Float.NaN) == 0) {
+        if (properties._domainValues[index] != null) {
             conditionLine = "If ( " + properties._features[index] + " is in [";
             targetNodeId = "R".equals(parentOrigin) ? properties._leftChildrenNormalized[index] : properties._rightChildrenNormalized[index];
             int[] inclusiveLevels = properties.levels[targetNodeId];
@@ -376,23 +383,33 @@ public class TreeHandler extends Handler {
             }
             conditionLine += " ])\n";
         } else {
-            String sign;
-            if ("R".equals(parentOrigin)) {
-                sign = " < ";
-                if ("LEFT".equals(properties._nas[index])) {
-                    useNan = true;
+            if (Float.compare(properties._thresholds[index],Float.NaN) == 0) {
+                String sign;
+                if ("R".equals(parentOrigin)) {
+                    sign = " is not ";
+                } else {
+                    sign = " is ";
                 }
+                conditionLine = "If ( " + properties._features[index] + sign + "NaN )\n";
             } else {
-                sign = " >= ";
-                if ("RIGHT".equals(properties._nas[index])) {
-                    useNan = true;
+                String sign;
+                if ("R".equals(parentOrigin)) {
+                    sign = " < ";
+                    if ("LEFT".equals(properties._nas[index])) {
+                        useNan = true;
+                    }
+                } else {
+                    sign = " >= ";
+                    if ("RIGHT".equals(properties._nas[index])) {
+                        useNan = true;
+                    }
                 }
+                conditionLine = "If ( " + properties._features[index] + sign + properties._thresholds[index];
+                if (useNan) {
+                    conditionLine += nanString;
+                }
+                conditionLine += " )\n";
             }
-            conditionLine = "If ( " + properties._features[index] + sign + properties._thresholds[index];
-            if (useNan) {
-                conditionLine += nanString;
-            }
-            conditionLine += " )\n";
         }
         return conditionLine;
     }

@@ -18,32 +18,32 @@ If ( Distance < 687.5 or Distance is NaN )
 |
 |
 |
-If ( Dest < 50.5 or Dest is NaN )
+If ( Dest is in [ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX  ])
 ^
 |
 |
 |
-If ( Origin < 53.0 )
+If ( Origin is in [ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR  ])
 ^
 |
 |
 |
-If ( fDayOfWeek < 3.5 or fDayOfWeek is NaN )
+If ( fDayOfWeek is in [f1 f2 f3 f4  ])
 ^
 |
 |
 |
-If ( UniqueCarrier >= 7.5 or UniqueCarrier is NaN )
+If ( UniqueCarrier is in [US WN  ])
 ^
 |
 |
 |
-If ( UniqueCarrier >= 5.5 or UniqueCarrier is NaN )
+If ( UniqueCarrier is in [TW UA US WN  ])
 ^
 |
 |
 |
-If ( fYear < 7.0 )
+If ( fYear is in [f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994  ])
 ^
 |
 |

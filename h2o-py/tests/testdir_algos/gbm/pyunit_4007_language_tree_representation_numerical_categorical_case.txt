@@ -16,7 +16,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 ]) {
 							
 								Predicted value: 7.0
 								
@@ -29,18 +29,18 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 								
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 ]) {
 							
 								Predicted value: 7.0
 								
 							}
 						}
-					} else {
+					} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP ]) {
 					
 						If ( Origin is in [ MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 						
@@ -57,19 +57,19 @@ If ( IsDepDelayed is in [ YES ]) {
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 ]) {
 								
 									If ( fYear is in [ f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 							
 								If ( fYear is in [ f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 								
@@ -82,13 +82,13 @@ If ( IsDepDelayed is in [ YES ]) {
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 								
 									Predicted value: 8.0
 									
 								}
 							}
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 						
 							If ( fDayofMonth is in [ f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 							
@@ -98,24 +98,24 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA US ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 								
 									If ( UniqueCarrier is in [ WN ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA US ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 ]) {
 							
 								If ( fDayOfWeek is in [ f7 ]) {
 								
@@ -123,18 +123,18 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 								
 									If ( fDayofMonth is in [ f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 ]) {
 									
 										Predicted value: 9.0
 										
@@ -148,7 +148,7 @@ If ( IsDepDelayed is in [ YES ]) {
 					Predicted value: 4.0
 					
 				}
-			} else {
+			} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 			
 				If ( fDayofMonth is in [ f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 				
@@ -168,12 +168,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 f1998 ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 ]) {
 								
 									If ( fDayOfWeek is in [ f4 ]) {
 									
@@ -186,7 +186,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									}
 								}
 							}
-						} else {
+						} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 ]) {
 						
 							If ( fDayofMonth is in [ f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 							
@@ -194,25 +194,25 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 ]) {
 								
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 ]) {
 							
 								If ( fDayofMonth is in [ f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 ]) {
 								
 									Predicted value: 8.0
 									
 								}
 							}
 						}
-					} else {
+					} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 					
 						If ( fYear is in [ f1991 f1992 f1993 f1994 f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 						
@@ -220,7 +220,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 							
 								If ( Distance >= 599.5 or Distance is NaN ) {
 								
@@ -228,7 +228,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 ]) {
 									
 										Predicted value: 9.0
 										
@@ -239,7 +239,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 								}
 							}
-						} else {
+						} else if ( fYear is in [ f1987 f1988 f1989 f1990 ]) {
 						
 							If ( Origin is in [ MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 							
@@ -249,17 +249,17 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU ]) {
 								
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 							
 								If ( Dest is in [ PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 								
@@ -267,12 +267,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF ]) {
 								
 									Predicted value: 8.0
 									
@@ -280,7 +280,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							}
 						}
 					}
-				} else {
+				} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 				
 					If ( fMonth is in [ f10 ]) {
 					
@@ -297,12 +297,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( fDayOfWeek is in [ f1 f2 f3 ]) {
 						
 							Predicted value: 6.0
 							
@@ -333,7 +333,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK ]) {
 							
 								If ( Distance >= 398.0 or Distance is NaN ) {
 								
@@ -352,7 +352,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 									
 										Predicted value: 9.0
 										
@@ -363,7 +363,7 @@ If ( IsDepDelayed is in [ YES ]) {
 					}
 				}
 			}
-		} else {
+		} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 		
 			If ( fYear is in [ f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 			
@@ -382,12 +382,12 @@ If ( IsDepDelayed is in [ YES ]) {
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( UniqueCarrier is in [ AA CO DL ]) {
 						
 							Predicted value: 6.0
 							
 						}
-					} else {
+					} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 f1998 f1999 ]) {
 					
 						If ( fYear is in [ f1999 ]) {
 						
@@ -408,25 +408,25 @@ If ( IsDepDelayed is in [ YES ]) {
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 								
 									If ( fDayOfWeek is in [ f6 f7 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
-							} else {
+							} else if ( UniqueCarrier is in [ AA CO DL ]) {
 							
 								If ( fDayofMonth is in [ f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 								
 									Predicted value: 8.0
 									
@@ -434,7 +434,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							}
 						}
 					}
-				} else {
+				} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 				
 					If ( Distance >= 1291.0 or Distance is NaN ) {
 					
@@ -476,18 +476,18 @@ If ( IsDepDelayed is in [ YES ]) {
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE ]) {
 						
 							If ( fDayOfWeek is in [ f6 f7 ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 ]) {
 							
 								Predicted value: 7.0
 								
@@ -495,13 +495,13 @@ If ( IsDepDelayed is in [ YES ]) {
 						}
 					}
 				}
-			} else {
+			} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 			
 				Predicted value: 3.0
 				
 			}
 		}
-	} else {
+	} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX ]) {
 	
 		If ( Origin is in [ MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 		
@@ -511,7 +511,7 @@ If ( IsDepDelayed is in [ YES ]) {
 				
 					Predicted value: 4.0
 					
-				} else {
+				} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 				
 					If ( fMonth is in [ f1 ]) {
 					
@@ -536,18 +536,18 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 								
 									Predicted value: 8.0
 									
 								}
 							}
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK ]) {
 						
 							If ( Distance >= 433.5 ) {
 							
@@ -555,7 +555,7 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS ]) {
 								
 									Predicted value: 8.0
 									
@@ -568,12 +568,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS ]) {
 								
 									Predicted value: 8.0
 									
@@ -586,7 +586,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						
 					}
 				}
-			} else {
+			} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 			
 				If ( Dest is in [ DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 				
@@ -615,19 +615,19 @@ If ( IsDepDelayed is in [ YES ]) {
 								}
 							}
 						}
-					} else {
+					} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 ]) {
 					
 						If ( Dest is in [ HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP ]) {
 						
 							Predicted value: 6.0
 							
 						}
 					}
-				} else {
+				} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW ]) {
 				
 					If ( Distance >= 489.5 ) {
 					
@@ -642,7 +642,7 @@ If ( IsDepDelayed is in [ YES ]) {
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 						
 							Predicted value: 6.0
 							
@@ -653,13 +653,13 @@ If ( IsDepDelayed is in [ YES ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC ]) {
 						
 							If ( fDayOfWeek is in [ f5 f6 f7 ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 							
 								If ( Dest is in [ BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 								
@@ -672,7 +672,7 @@ If ( IsDepDelayed is in [ YES ]) {
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR ]) {
 								
 									Predicted value: 8.0
 									
@@ -682,7 +682,7 @@ If ( IsDepDelayed is in [ YES ]) {
 					}
 				}
 			}
-		} else {
+		} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 		
 			If ( Origin is in [ EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 			
@@ -700,18 +700,18 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW ]) {
 						
 							Predicted value: 6.0
 							
 						}
 					}
-				} else {
+				} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 				
 					If ( Distance >= 1136.5 or Distance is NaN ) {
 					
@@ -730,7 +730,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						
 					}
 				}
-			} else {
+			} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI ]) {
 			
 				If ( fDayofMonth is in [ f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 				
@@ -744,19 +744,19 @@ If ( IsDepDelayed is in [ YES ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH ]) {
 						
 							Predicted value: 6.0
 							
 						}
 					}
-				} else {
+				} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 				
 					If ( fYear is in [ f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 					
 						If ( Dest is in [ FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 						
@@ -771,12 +771,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR ]) {
 						
 							Predicted value: 6.0
 							
@@ -798,25 +798,25 @@ If ( IsDepDelayed is in [ YES ]) {
 				
 					Predicted value: 4.0
 					
-				} else {
+				} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 				
 					If ( fDayofMonth is in [ f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 ]) {
 					
 						Predicted value: 5.0
 						
 					}
 				}
-			} else {
+			} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 			
 				If ( fDayOfWeek is in [ f4 f5 f6 f7 ]) {
 				
 					Predicted value: 4.0
 					
-				} else {
+				} else if ( fDayOfWeek is in [ f1 f2 f3 ]) {
 				
 					Predicted value: 4.0
 					
@@ -842,25 +842,25 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 								
 									Predicted value: 8.0
 									
 								}
 							}
-						} else {
+						} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 						
 							If ( fYear is in [ f1998 f1999 f2000 ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 							
 								Predicted value: 7.0
 								
 							}
 						}
-					} else {
+					} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 ]) {
 					
 						If ( UniqueCarrier is in [ TW UA US WN ]) {
 						
@@ -872,29 +872,29 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 								
 									If ( fYear is in [ f2000 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 f1998 f1999 ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
-							} else {
+							} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 						
 							If ( fYear is in [ f1998 f1999 f2000 ]) {
 							
@@ -902,19 +902,19 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 								
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 							
 								Predicted value: 7.0
 								
 							}
 						}
 					}
-				} else {
+				} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 ]) {
 				
 					If ( fYear is in [ f1998 f1999 f2000 ]) {
 					
@@ -922,7 +922,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 						
 							If ( Distance >= 1225.5 or Distance is NaN ) {
 							
@@ -934,13 +934,13 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 							}
 						}
-					} else {
+					} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 					
 						If ( fYear is in [ f1997 f1998 f1999 f2000 ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 ]) {
 						
 							If ( Distance >= 726.5 ) {
 							
@@ -948,7 +948,7 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW ]) {
 								
 									Predicted value: 8.0
 									
@@ -961,7 +961,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 									
 										Predicted value: 9.0
 										
@@ -972,7 +972,7 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW ]) {
 									
 										Predicted value: 9.0
 										
@@ -982,7 +982,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						}
 					}
 				}
-			} else {
+			} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 			
 				If ( UniqueCarrier is in [ TW UA US WN ]) {
 				
@@ -1003,13 +1003,13 @@ If ( IsDepDelayed is in [ YES ]) {
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 								
 									If ( fDayofMonth is in [ f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 ]) {
 									
 										Predicted value: 9.0
 										
@@ -1021,50 +1021,50 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 ]) {
 								
 									If ( fDayofMonth is in [ f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayofMonth is in [ f1 f10 f11 f12 ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
 							}
-						} else {
+						} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA ]) {
 						
 							If ( Origin is in [ MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT ]) {
 							
 								Predicted value: 7.0
 								
 							}
 						}
-					} else {
+					} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA US ]) {
 					
 						If ( fYear is in [ f1998 f1999 f2000 ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 ]) {
 						
 							Predicted value: 6.0
 							
 						}
 					}
-				} else {
+				} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 				
 					If ( fDayOfWeek is in [ f5 f6 f7 ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 					
 						If ( fDayOfWeek is in [ f4 f5 f6 f7 ]) {
 						
@@ -1072,18 +1072,18 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( fDayOfWeek is in [ f1 f2 f3 ]) {
 						
 							If ( fYear is in [ f1999 f2000 ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 f1995 f1996 f1997 f1998 ]) {
 							
 								If ( Distance >= 1097.0 or Distance is NaN ) {
 								
@@ -1107,7 +1107,7 @@ If ( IsDepDelayed is in [ YES ]) {
 				}
 			}
 		}
-	} else {
+	} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 f1993 f1994 ]) {
 	
 		If ( UniqueCarrier is in [ TW UA US WN ]) {
 		
@@ -1123,7 +1123,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 							
 								Predicted value: 7.0
 								
@@ -1138,12 +1138,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 ]) {
 								
 									If ( fYear is in [ f1991 ]) {
 									
@@ -1155,19 +1155,19 @@ If ( IsDepDelayed is in [ YES ]) {
 										
 									}
 								}
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW ]) {
 							
 								If ( fDayOfWeek is in [ f7 ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayOfWeek is in [ f1 f2 f3 f4 f5 f6 ]) {
 								
 									If ( Dest is in [ IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD ]) {
 									
 										Predicted value: 9.0
 										
@@ -1187,7 +1187,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 						}
 					}
-				} else {
+				} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 				
 					If ( Origin is in [ MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 					
@@ -1199,12 +1199,12 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 ]) {
 								
 									Predicted value: 8.0
 									
 								}
-							} else {
+							} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC ]) {
 							
 								If ( fDayofMonth is in [ f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 								
@@ -1212,30 +1212,30 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 ]) {
 									
 										Predicted value: 9.0
 										
 									}
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 ]) {
 								
 									If ( fYear is in [ f1993 f1994 f1995 f1996 f1997 f1998 f1999 f2000 ]) {
 									
 										Predicted value: 9.0
 										
-									} else {
+									} else if ( fYear is in [ f1987 f1988 f1989 f1990 f1991 f1992 ]) {
 									
 										Predicted value: 9.0
 										
 									}
 								}
 							}
-						} else {
+						} else if ( fYear is in [ f1987 f1988 f1989 f1990 ]) {
 						
 							Predicted value: 6.0
 							
 						}
-					} else {
+					} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR ]) {
 					
 						If ( Dest is in [ LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 						
@@ -1243,12 +1243,12 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX ]) {
 						
 							If ( Distance >= 687.5 ) {
 							
@@ -1256,7 +1256,7 @@ If ( IsDepDelayed is in [ YES ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fYear is in [ f1987 f1988 f1989 f1990 ]) {
 								
 									Predicted value: 8.0
 									
@@ -1283,7 +1283,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						}
 					}
 				}
-			} else {
+			} else if ( UniqueCarrier is in [ AA CO DL HP PI PS TW UA ]) {
 			
 				If ( fDayofMonth is in [ f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 				
@@ -1291,7 +1291,7 @@ If ( IsDepDelayed is in [ YES ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 					
 						If ( fDayOfWeek is in [ f4 f5 f6 f7 ]) {
 						
@@ -1299,18 +1299,18 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( fDayOfWeek is in [ f1 f2 f3 ]) {
 						
 							Predicted value: 6.0
 							
 						}
 					}
-				} else {
+				} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 				
 					If ( fDayOfWeek is in [ f5 f6 f7 ]) {
 					
@@ -1320,7 +1320,7 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX ]) {
 							
 								If ( Origin is in [ ORD ]) {
 								
@@ -1332,12 +1332,12 @@ If ( IsDepDelayed is in [ YES ]) {
 									
 								}
 							}
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA ]) {
 						
 							Predicted value: 6.0
 							
 						}
-					} else {
+					} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 					
 						If ( fDayofMonth is in [ f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 						
@@ -1345,12 +1345,12 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 ]) {
 							
 								Predicted value: 7.0
 								
 							}
-						} else {
+						} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 ]) {
 						
 							Predicted value: 6.0
 							
@@ -1358,7 +1358,7 @@ If ( IsDepDelayed is in [ YES ]) {
 					}
 				}
 			}
-		} else {
+		} else if ( UniqueCarrier is in [ AA CO DL HP PI PS ]) {
 		
 			If ( Dest is in [ LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 			
@@ -1372,30 +1372,30 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 							
 								If ( fDayofMonth is in [ f4 f5 f6 f7 f8 f9 ]) {
 								
 									Predicted value: 8.0
 									
-								} else {
+								} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f3 f30 f31 ]) {
 								
 									Predicted value: 8.0
 									
 								}
 							}
-						} else {
+						} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 ]) {
 						
 							Predicted value: 6.0
 							
 						}
-					} else {
+					} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT ]) {
 					
 						If ( fDayofMonth is in [ f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 ]) {
 						
 							Predicted value: 6.0
 							
@@ -1407,13 +1407,13 @@ If ( IsDepDelayed is in [ YES ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 ]) {
 					
 						If ( Origin is in [ MIA MKE MLB MRY MSP MSY MYR OAK OGG OMA ORD ORF PBI PHF PHL PHX PIT PSP PVD PWM RDU RIC RNO ROA ROC RSW SAN SBN SCK SDF SEA SFO SJC SJU SLC SMF SNA SRQ STL STX SWF SYR TLH TPA TRI TUS TYS UCA ]) {
 						
 							Predicted value: 6.0
 							
-						} else {
+						} else if ( Origin is in [ ABE ABQ ACY ALB ATL AUS AVP BDL BGM BHM BNA BOS BTV BUF BUR BWI CAE CHO CHS CLE CLT CMH COS CRW CVG DAY DCA DEN DFW DSM DTW ERI EWR FLL GSO HNL IAD IAH ICT IND ISP JAX JFK LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MFR MHT ]) {
 						
 							If ( UniqueCarrier is in [ PS ]) {
 							
@@ -1427,7 +1427,7 @@ If ( IsDepDelayed is in [ YES ]) {
 						}
 					}
 				}
-			} else {
+			} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX ]) {
 			
 				If ( Dest is in [ FLL FNT GEG GRR GSO GSP HNL HTS IAD IAH ICT IND ISP JAX JFK KOA LAS LAX LEX LGA LIH LYH MCI MCO MDT MDW MHT MIA MRY MSY OAJ OAK OGG OMA ORD ORF ORH PBI PDX PHF PHL PHX PIT PSP PVD RDU RIC RNO ROA ROC RSW SAN SCK SDF SEA SFO SJC SMF SNA STL SWF SYR TOL TPA TUS UCA ]) {
 				
@@ -1447,20 +1447,20 @@ If ( IsDepDelayed is in [ YES ]) {
 							
 								Predicted value: 7.0
 								
-							} else {
+							} else if ( fDayOfWeek is in [ f1 f2 f3 f4 ]) {
 							
 								Predicted value: 7.0
 								
 							}
 						}
 					}
-				} else {
+				} else if ( Dest is in [ ABE ABQ ACY ALB ATL AVP BDL BGM BNA BOS BTV BUF BUR BWI CAE CAK CHA CHO CHS CLE CLT CMH DAY DCA DEN DFW DTW ELM ERI EWR FAT FAY ]) {
 				
 					If ( fDayofMonth is in [ f26 f27 f28 f29 f3 f30 f31 f4 f5 f6 f7 f8 f9 ]) {
 					
 						Predicted value: 5.0
 						
-					} else {
+					} else if ( fDayofMonth is in [ f1 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f2 f20 f21 f22 f23 f24 f25 ]) {
 					
 						Predicted value: 5.0
 						
